@@ -1,0 +1,20 @@
+name: CombatExpanded
+version: 1.0
+main: com.willy.combatexpanded.CombatExpanded
+api-version: 1.21
+author: WornOutWilly
+description: "Adds Fun Movements & Skills."
+
+commands:
+  combatexpanded:
+    description: Main commands for CombatExpanded
+    usage: "/ce reload | /ce enable [player|all] | /ce disable [player|all]"
+    aliases: [ce]
+
+permissions:
+  combatexpanded.admin:
+    description: Allows enabling/disabling CombatExpanded for others or globally & reloading
+    default: op
+
+depend: []
+softdepend: [PlaceholderAPI, BetterHUD]

@@ -1,0 +1,35 @@
+# CombatExpanded Config
+
+grapple:
+  pending-expire: 100       # Time (in ticks) before a pending grapple expires if not activated
+  timeout: 60              # Time (in ticks) before grapple forcefully cancels when pulling
+  pull-speed: 1.5          # Pull speed multiplier when dragging towards target
+  smoothness: 0.25         # Interpolation factor (0.0–1.0) for velocity smoothing
+  arrival-distance: 1.0    # Distance at which grapple counts as "arrived"
+
+dash:
+  speed: 2.0           # Dash speeds
+  air-speed: 1.0       # Air-Dash speeds
+  min-threshold: 0.15  # Movement block threshold to detect valid dash direction
+
+  cooldown: 5          # 0.25s
+  grace-period: 5      # short lockout after dashing
+  hit-window: 8        # duration after dash to trigger grapple on hit
+
+  damage: 7.5          # Damage the dash deals
+  knockback: 0.5       # How far you get knocked back (horizontally)
+  knockback-y: 1.2     # How far you get knocked back (vertically)
+
+slam:
+  fall-speed: -3.0           # Slam speeds
+  aoe-radius: 5.0            # Radius of slam to detect/ damage mobs
+  knockback-strength: 2.0    # How far nearby mobs get knocked back
+  damage: 15.0               # Damage the slam deals
+
+stamina:
+  max-stamina: 4       # Maximum stamina you can have
+  normal-regen: 0.125  # x4 this value for regen per second when still, so .5 stamina per second
+  still-regen: 0.375   # x4 this value for regen per second when moving, so 1.5 stamina per second
+
+  dash-cost: 1         # Stamina cost of dash
+  slam-cost: 1         # Stamina cost of slam
