@@ -21,7 +21,7 @@ public class StaminaListener implements Listener {
     public void onPlayerMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
-        if (!CombatExpanded.getInstance().isPluginEnabled() || player.isFlying() || player.getVehicle() != null) return;
+        if (!CombatExpanded.getInstance().hasArtifice(player) || !CombatExpanded.getInstance().isPluginEnabled() || player.isFlying() || player.getVehicle() != null) return;
 
         double distanceSquared = event.getFrom().distanceSquared(event.getTo());
         double thresholdSquared = 0.01; // about 0.1 blocks

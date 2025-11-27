@@ -24,7 +24,7 @@ public class DashListener implements Listener {
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
-        if (!CombatExpanded.getInstance().isPluginEnabled() || player.isFlying() || player.getVehicle() != null) return;
+        if (!CombatExpanded.getInstance().hasArtifice(player) || !CombatExpanded.getInstance().isPluginEnabled() || player.isFlying() || player.getVehicle() != null) return;
 
         Vector from = event.getFrom().toVector();
         Vector to = event.getTo().toVector();
@@ -37,7 +37,7 @@ public class DashListener implements Listener {
     @EventHandler
     public void onPlayerToggleSneak(PlayerToggleSneakEvent event) {
         Player player = event.getPlayer();
-        if (!CombatExpanded.getInstance().isPluginEnabled() || player.isFlying() || player.getVehicle() != null) return;
+        if (!CombatExpanded.getInstance().hasArtifice(player) || !CombatExpanded.getInstance().isPluginEnabled() || player.isFlying() || player.getVehicle() != null) return;
 
         if (!event.isSneaking()) return;
 

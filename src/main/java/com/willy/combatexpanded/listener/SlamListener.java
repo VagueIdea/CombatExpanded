@@ -48,7 +48,7 @@ public class SlamListener implements Listener {
     public void onPlayerMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
-        if (!CombatExpanded.getInstance().isPluginEnabled() || player.isFlying() || player.getVehicle() != null) return;
+        if (!CombatExpanded.getInstance().hasArtifice(player) || !CombatExpanded.getInstance().isPluginEnabled() || player.isFlying() || player.getVehicle() != null) return;
 
         if (player.isOnGround()) {
             if (slamManager.isSlamming(uuid)) {
@@ -75,7 +75,7 @@ public class SlamListener implements Listener {
         Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
 
-        if (!CombatExpanded.getInstance().isPluginEnabled() || player.isFlying() || player.getVehicle() != null) return;
+        if (!CombatExpanded.getInstance().hasArtifice(player) || !CombatExpanded.getInstance().isPluginEnabled() || player.isFlying() || player.getVehicle() != null) return;
 
         // Sneak released
         if (!event.isSneaking()) {

@@ -6,14 +6,15 @@ author: WornOutWilly
 description: "Adds Fun Movements & Skills."
 
 commands:
-  combatexpanded:
+  artifice:
+    description: Toggles The New Combat System For Players
+    usage: /artifice
+    aliases: [a, togglea, toggleartifice]
+  ce:
     description: Main commands for CombatExpanded
-    usage: "/ce reload | /ce enable [player|all] | /ce disable [player|all]"
-    aliases: [ce]
-
-permissions:
-  combatexpanded.admin:
-    description: Allows enabling/disabling CombatExpanded for others or globally & reloading
+    usage: "/ce reload | /ce enable | /ce disable"
+    aliases: combatexpanded
+    permission: combatexpanded.admin
     default: op
 
 depend: []

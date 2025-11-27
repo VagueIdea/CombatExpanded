@@ -21,7 +21,7 @@ public class GrappleListener implements Listener {
     public void onPlayerSwapHands(PlayerSwapHandItemsEvent event) {
         Player player = event.getPlayer();
 
-        if (!CombatExpanded.getInstance().isPluginEnabled() || player.isFlying() || player.getVehicle() != null) return;
+        if (!CombatExpanded.getInstance().hasArtifice(player) || !CombatExpanded.getInstance().isPluginEnabled() || player.isFlying() || player.getVehicle() != null) return;
         if (!grappleManager.hasPendingGrapple(player)) return;
 
         // 🔹 Distance check before starting grapple
@@ -54,14 +54,14 @@ public class GrappleListener implements Listener {
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        if (!CombatExpanded.getInstance().isPluginEnabled() || player.isFlying() || player.getVehicle() != null) return;
+        if (!CombatExpanded.getInstance().hasArtifice(player) || !CombatExpanded.getInstance().isPluginEnabled() || player.isFlying() || player.getVehicle() != null) return;
         grappleManager.cancelGrapple(player);
     }
 
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent event) {
         Player player = event.getPlayer();
-        if (!CombatExpanded.getInstance().isPluginEnabled() || player.isFlying() || player.getVehicle() != null) return;
+        if (!CombatExpanded.getInstance().hasArtifice(player) || !CombatExpanded.getInstance().isPluginEnabled() || player.isFlying() || player.getVehicle() != null) return;
         grappleManager.cancelGrapple(player);
     }
 }

@@ -1,5 +1,7 @@
 # CombatExpanded Config
 
+plugin-enabled: true
+
 grapple:
   pending-expire: 100       # Time (in ticks) before a pending grapple expires if not activated
   timeout: 60              # Time (in ticks) before grapple forcefully cancels when pulling

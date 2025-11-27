@@ -1,5 +1,8 @@
 package com.willy.combatexpanded;
 
+import com.willy.combatexpanded.commands.CE;
+import com.willy.combatexpanded.commands.Artifice;
+
 import com.willy.combatexpanded.listener.SlamListener;
 import com.willy.combatexpanded.listener.StaminaListener;
 import com.willy.combatexpanded.listener.DashListener;
@@ -12,6 +15,7 @@ import com.willy.combatexpanded.manager.GrappleManager;
 
 import com.willy.combatexpanded.placeholder.CombatExpandedPlaceholder;
 
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -39,12 +43,14 @@ public class CombatExpanded extends JavaPlugin {
 
     // Global enable/disable state
     private boolean pluginEnabled = true;
+    private boolean hasArtifice;
 
     @Override
     public void onEnable() {
         instance = this;
 
         saveDefaultConfig();
+        pluginEnabled = getConfig().getBoolean("plugin-enabled", true);
 
         staminaManager = new StaminaManager(lastMovedTime);
         dashManager = new DashManager(this);
@@ -71,41 +77,15 @@ public class CombatExpanded extends JavaPlugin {
         getLogger().info("CombatExpanded enabled.");
 
         // Register commands
-        Objects.requireNonNull(getCommand("ce")).setExecutor((sender, command, label, args) -> handleCommand(sender, args));
+        Objects.requireNonNull(getCommand("ce")).setExecutor(new CE(this));
+        Objects.requireNonNull(getCommand("artifice")).setExecutor(new Artifice(this));
     }
 
-    private boolean handleCommand(CommandSender sender, String[] args) {
-        if (!sender.hasPermission("combatexpanded.admin")) {
-            sender.sendMessage("§cYou do not have permission to use this command.");
-            return true;
-        }
-
-        if (args.length == 0) {
-            return false;
-        }
-
-        switch (args[0].toLowerCase()) {
-            case "enable":
-                setPluginEnabled(true);
-                sender.sendMessage("§aCombatExpanded enabled!");
-                break;
-            case "disable":
-                setPluginEnabled(false);
-                sender.sendMessage("§cCombatExpanded disabled!");
-                break;
-            case "reload":
-                reloadPlugin(sender);
-                break;
-            default:
-                sender.sendMessage("§eUsage: /ce <enable|disable|reload>");
-        }
-        return true;
-    }
-
-    private void reloadPlugin(CommandSender sender) {
+    public void reloadPlugin(CommandSender sender) {
         reloadConfig();
         sender.sendMessage("§aCombatExpanded config reloaded!");
 
+        pluginEnabled = getConfig().getBoolean("plugin-enabled", true);
         staminaManager.reloadConfigValues();
         dashManager.reloadConfigValues();
         slamManager.reloadConfigValues();
@@ -124,5 +104,22 @@ public class CombatExpanded extends JavaPlugin {
 
     // Plugin enable/disable state
     public boolean isPluginEnabled() { return pluginEnabled; }
-    public void setPluginEnabled(boolean enabled) { this.pluginEnabled = enabled; }
+    public void setPluginEnabled(boolean enabled) {
+        this.pluginEnabled = enabled;
+        getConfig().set("plugin-enabled", enabled);
+        saveConfig();
+    }
+
+
+    private final Map<UUID, Boolean> artificeToggle = new HashMap<>();
+    public boolean hasArtifice(Player player) {
+        return artificeToggle.getOrDefault(player.getUniqueId(), true);
+    }
+
+    public void toggleArtifice(Player player) {
+        UUID id = player.getUniqueId();
+        boolean newValue = !hasArtifice(player);
+        artificeToggle.put(id, newValue);
+    }
+
 }
