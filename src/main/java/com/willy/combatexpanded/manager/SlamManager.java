@@ -14,7 +14,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-@SuppressWarnings("ALL")
 public class SlamManager {
 
     private final CombatExpanded plugin;
@@ -70,6 +69,7 @@ public class SlamManager {
         Location loc = player.getLocation();
 
         player.playSound(loc, Sound.ENTITY_IRON_GOLEM_ATTACK, 1.0f, 0.8f);
+        player.playSound(loc, Sound.ITEM_TRIDENT_THROW, 0.2f, 0.2f);
 
         // Spawn particles continuously while slamming
         Bukkit.getScheduler().runTaskTimer(plugin, task -> {
@@ -143,6 +143,7 @@ public class SlamManager {
             }
 
             player.getWorld().playSound(loc, Sound.ITEM_MACE_SMASH_GROUND_HEAVY, 0.7f, 0.8f);
+            player.getWorld().playSound(loc, Sound.BLOCK_BELL_USE, 0.4f, 0.4f);
             player.getWorld().spawnParticle(
                     Particle.WAX_OFF,
                     loc,

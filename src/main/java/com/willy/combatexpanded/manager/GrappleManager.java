@@ -126,12 +126,12 @@ public class GrappleManager {
                 if (reverse) {
                     Vector desiredVelocity = playerLoc.clone().subtract(targetLoc).normalize().multiply(pullSpeed);
                     target.setVelocity(lerp(target.getVelocity(), desiredVelocity, smoothness));
-                    target.getWorld().playSound(player.getLocation(), Sound.BLOCK_CHAIN_STEP, 0.4f, 0.8f);
+                    target.getWorld().playSound(player.getLocation(), Sound.BLOCK_CHAIN_STEP, 0.4f, 0.6f);
                 } else {
                     Vector desiredVelocity = targetLoc.clone().subtract(playerLoc).normalize().multiply(pullSpeed);
                     player.setVelocity(lerp(player.getVelocity(), desiredVelocity, smoothness));
                     player.setFallDistance(0);
-                    player.getWorld().playSound(player.getLocation(), Sound.BLOCK_CHAIN_STEP, 0.4f, 0.8f);
+                    player.getWorld().playSound(player.getLocation(), Sound.BLOCK_CHAIN_STEP, 0.4f, 0.6f);
                 }
 
                 updateTether(player, target);

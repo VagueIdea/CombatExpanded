@@ -147,10 +147,12 @@ public class DashManager {
                 player.getWorld().spawnParticle(Particle.WAX_ON, Tloc,
                         15, 1, 1, 1, 0.01);
                 player.getWorld().playSound(loc, Sound.BLOCK_TRIAL_SPAWNER_OPEN_SHUTTER, 0.7f, 1.2f);
+                player.getWorld().playSound(loc, Sound.BLOCK_AMETHYST_CLUSTER_HIT, 1f, 0.4f);
             } else {
                 player.getWorld().spawnParticle(Particle.SCRAPE, Tloc,
                         15, 1, 1, 1, 0.01);
                 player.getWorld().playSound(loc, Sound.BLOCK_TRIAL_SPAWNER_SPAWN_ITEM_BEGIN, 1.4f, 0.8f);
+                player.getWorld().playSound(loc, Sound.BLOCK_AMETHYST_CLUSTER_HIT, 1f, 1f);
             }
 
             plugin.getGrappleManager().setPendingGrappleTarget(player, target);
@@ -164,6 +166,7 @@ public class DashManager {
 
         Location loc = player.getLocation();
         player.playSound(loc, Sound.ENTITY_ENDER_DRAGON_FLAP, 0.6f, 1.2f);
+        player.playSound(loc, Sound.ITEM_TRIDENT_RETURN, 0.1f, 0.1f);
         player.getWorld().spawnParticle(Particle.GUST, loc, 5, 0.5, 0.5, 0.5, 0.01);
     }
 
