@@ -39,7 +39,7 @@ public record MainCommand(CombatExpanded plugin) implements CommandExecutor, Tab
             plugin.reloadPlugin(sender);
             return true;
         }
-        sender.sendMessage("Command Not Found");
+        sender.sendMessage("§cCommand Does Not Exist");
         return true;
     }
 
