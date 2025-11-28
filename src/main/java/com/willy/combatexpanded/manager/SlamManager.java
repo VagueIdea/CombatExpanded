@@ -1,25 +1,20 @@
 package com.willy.combatexpanded.manager;
 
-import com.willy.combatexpanded.CombatExpanded;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Particle;
-import org.bukkit.Sound;
+import org.bukkit.*;
+import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.util.Vector;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.block.data.BlockData;
-import org.bukkit.util.BoundingBox;
 import org.bukkit.scheduler.BukkitRunnable;
-
+import org.bukkit.util.Vector;
+import com.willy.combatexpanded.CombatExpanded;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+@SuppressWarnings("ALL")
 public class SlamManager {
 
     private final CombatExpanded plugin;

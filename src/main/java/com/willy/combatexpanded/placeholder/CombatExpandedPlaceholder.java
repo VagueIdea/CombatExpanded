@@ -1,13 +1,13 @@
 package com.willy.combatexpanded.placeholder;
 
-import com.willy.combatexpanded.CombatExpanded;
-import com.willy.combatexpanded.manager.StaminaManager;
-import com.willy.combatexpanded.manager.DashManager;
-import com.willy.combatexpanded.manager.SlamManager;
-import com.willy.combatexpanded.manager.GrappleManager;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import com.willy.combatexpanded.CombatExpanded;
+import com.willy.combatexpanded.manager.DashManager;
+import com.willy.combatexpanded.manager.GrappleManager;
+import com.willy.combatexpanded.manager.SlamManager;
+import com.willy.combatexpanded.manager.StaminaManager;
 
 public class CombatExpandedPlaceholder extends PlaceholderExpansion {
 
@@ -29,7 +29,7 @@ public class CombatExpandedPlaceholder extends PlaceholderExpansion {
 
     @Override
     public @NotNull String getVersion() {
-        return plugin.getDescription().getVersion();
+        return plugin.getPluginMeta().getVersion();
     }
 
     @Override
@@ -51,7 +51,7 @@ public class CombatExpandedPlaceholder extends PlaceholderExpansion {
                 return String.valueOf(maxStamina);
             case "stamina_percent":
                 double current = staminaManager.getStamina(player);
-                double percent = (current / (double) maxStamina) * 100;
+                double percent = (current / maxStamina) * 100;
                 return String.format("%.0f", percent);
 
             // --- Dash ---

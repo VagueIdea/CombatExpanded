@@ -1,9 +1,10 @@
 package com.willy.combatexpanded.manager;
 
-import com.willy.combatexpanded.CombatExpanded;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import com.willy.combatexpanded.CombatExpanded;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -61,13 +62,16 @@ public class StaminaManager {
     // ==== Use/Consume Methods ===
     // ============================
 
-    public boolean useDashStamina(Player player) { return useStamina(player, dashCost); }
-    public boolean useSlamStamina(Player player) { return useStamina(player, slamCost); }
+    public void useDashStamina(Player player) {
+        useStamina(player, dashCost);
+    }
+    public void useSlamStamina(Player player) {
+        useStamina(player, slamCost);
+    }
 
-    public boolean useStamina(Player player, double cost) {
-        if (!hasEnoughStamina(player, cost)) return false;
+    public void useStamina(Player player, double cost) {
+        if (!hasEnoughStamina(player, cost)) return;
         consumeStamina(player, cost);
-        return true;
     }
 
     private void consumeStamina(Player player, double amount) {
@@ -102,14 +106,5 @@ public class StaminaManager {
                 }
             }
         }.runTaskTimer(CombatExpanded.getInstance(), 0L, REGEN_INTERVAL_TICKS);
-    }
-
-    /** Reset a player's stamina to full (optional utility) */
-    public void resetStamina(Player player) {
-        staminaMap.put(player.getUniqueId(), maxStamina);
-    }
-
-    private String formatStamina(double stamina) {
-        return String.format("%.2f", stamina); // 2 decimal places
     }
 }

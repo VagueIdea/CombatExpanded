@@ -1,27 +1,25 @@
 package com.willy.combatexpanded.listener;
 
-import com.willy.combatexpanded.CombatExpanded;
-import com.willy.combatexpanded.manager.GrappleManager;
+import org.bukkit.GameMode;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.*;
-import org.bukkit.GameMode;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.player.PlayerSwapHandItemsEvent;
+import com.willy.combatexpanded.CombatExpanded;
+import com.willy.combatexpanded.manager.GrappleManager;
 
-public class GrappleListener implements Listener {
-
-    private final GrappleManager grappleManager;
-
-    public GrappleListener(GrappleManager grappleManager) {
-        this.grappleManager = grappleManager;
-    }
+public record GrappleListener(GrappleManager grappleManager, CombatExpanded plugin) implements Listener {
 
     @EventHandler
     public void onPlayerSwapHands(PlayerSwapHandItemsEvent event) {
         Player player = event.getPlayer();
 
-        if (!CombatExpanded.getInstance().hasArtifice(player) || !CombatExpanded.getInstance().isPluginEnabled() || player.isFlying() || player.getVehicle() != null) return;
+        if (!plugin.hasArtifice(player) || plugin.isPluginEnabled() || player.isFlying() || player.getVehicle() != null)
+            return;
         if (!grappleManager.hasPendingGrapple(player)) return;
 
         // 🔹 Distance check before starting grapple
@@ -54,14 +52,16 @@ public class GrappleListener implements Listener {
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        if (!CombatExpanded.getInstance().hasArtifice(player) || !CombatExpanded.getInstance().isPluginEnabled() || player.isFlying() || player.getVehicle() != null) return;
+        if (!plugin.hasArtifice(player) || plugin.isPluginEnabled() || player.isFlying() || player.getVehicle() != null)
+            return;
         grappleManager.cancelGrapple(player);
     }
 
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent event) {
         Player player = event.getPlayer();
-        if (!CombatExpanded.getInstance().hasArtifice(player) || !CombatExpanded.getInstance().isPluginEnabled() || player.isFlying() || player.getVehicle() != null) return;
+        if (!plugin.hasArtifice(player) || plugin.isPluginEnabled() || player.isFlying() || player.getVehicle() != null)
+            return;
         grappleManager.cancelGrapple(player);
     }
 }

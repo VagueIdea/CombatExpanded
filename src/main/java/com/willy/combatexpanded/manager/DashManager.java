@@ -1,7 +1,5 @@
 package com.willy.combatexpanded.manager;
 
-import com.willy.combatexpanded.CombatExpanded;
-import com.willy.combatexpanded.listener.SlamListener;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
@@ -10,6 +8,8 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
+import com.willy.combatexpanded.CombatExpanded;
+import com.willy.combatexpanded.listener.SlamListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -75,14 +75,6 @@ public class DashManager {
         }
 
         checkDashCollisions(player);
-    }
-
-    public boolean hasDashedRecently(Player player, int maxTicksAgo) {
-
-        UUID uuid = player.getUniqueId();
-        if (!lastDashTick.containsKey(uuid)) return false;
-        long currentTick = Bukkit.getCurrentTick();
-        return (currentTick - lastDashTick.get(uuid)) <= maxTicksAgo;
     }
 
     public boolean canDash(Player player) {

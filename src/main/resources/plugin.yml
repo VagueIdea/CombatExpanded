@@ -8,14 +8,18 @@ description: "Adds Fun Movements & Skills."
 commands:
   artifice:
     description: Toggles The New Combat System For Players
-    usage: /artifice
-    aliases: [a, togglea, toggleartifice]
-  ce:
+    aliases: a
+  combatexpanded:
     description: Main commands for CombatExpanded
-    usage: "/ce reload | /ce enable | /ce disable"
-    aliases: combatexpanded
-    permission: combatexpanded.admin
+    aliases: ce
+
+permissions:
+  combatexpanded.artifice:
+    description: Players can toggle the New Combat System
+    default: true
+  combatexpanded.admin:
+    description: Allows admin commands of CombatExpanded
     default: op
 
-depend: []
+
 softdepend: [PlaceholderAPI, BetterHUD]

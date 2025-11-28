@@ -1,27 +1,21 @@
 package com.willy.combatexpanded.commands;
 
-import com.willy.combatexpanded.CombatExpanded;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+import com.willy.combatexpanded.CombatExpanded;
 
-public class Artifice implements CommandExecutor {
-
-    private final CombatExpanded plugin;
-
-    public Artifice(CombatExpanded plugin) {
-        this.plugin = plugin;
-    }
+public record ArtificeCommand(CombatExpanded plugin) implements CommandExecutor {
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
 
         if (!(sender instanceof Player player)) {
             sender.sendMessage("Only players can run this command.");
             return true;
         }
-
         plugin.toggleArtifice(player);
 
         if (plugin.hasArtifice(player)) {
@@ -29,7 +23,7 @@ public class Artifice implements CommandExecutor {
         } else {
             player.sendMessage("§cArtifice disabled.");
         }
-
         return true;
     }
+
 }
