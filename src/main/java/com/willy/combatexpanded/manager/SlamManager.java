@@ -84,19 +84,22 @@ public class SlamManager {
                 return;
             }
 
-            // Spawn particle at current player position without mutating anything
-            Location particleLoc = player.getLocation().add(0, 1, 0);
-            player.getWorld().spawnParticle(
-                    Particle.TRIAL_SPAWNER_DETECTION_OMINOUS,
-                    particleLoc,
-                    15, 0.3, 0.5, 0.3, 0.01
-            );
-            Location particleLoc2 = player.getLocation().add(0, 0.5, 0);
-            player.getWorld().spawnParticle(
-                    Particle.TRIAL_SPAWNER_DETECTION_OMINOUS,
-                    particleLoc2,
-                    15, 0.3, 0.5, 0.3, 0.01
-            );
+            Location[] locations = {
+                    player.getLocation().add(0, 0.25, 0),
+                    player.getLocation().add(0, 0.5, 0),
+                    player.getLocation().add(0, 0.75, 0),
+                    player.getLocation().add(0, 1, 0),
+                    player.getLocation().add(0, 1.25, 0)
+            };
+
+            for (Location particleLoc : locations) {
+                player.getWorld().spawnParticle(
+                        Particle.TRIAL_SPAWNER_DETECTION_OMINOUS,
+                        particleLoc,
+                        5, 0.3, 0.5, 0.3,
+                        0.1
+                );
+            }
         }, 0L, 1L);
     }
 
@@ -152,7 +155,7 @@ public class SlamManager {
 
             final int baseParticleCount = 0;      // particles at inner radius
             final int maxParticleCount = 24;      // particles at outer radius
-            final int totalTicks = 6;
+            final int totalTicks = 10;
             final double maxRadius = aoeRadius;
             final double radiusIncrement = maxRadius / totalTicks;
 
@@ -176,10 +179,24 @@ public class SlamManager {
                         player.getWorld().spawnParticle(
                                 Particle.DUST_PILLAR,
                                 new Location(loc.getWorld(), x, y, z),
-                                8,
-                                0, 0, 0,
+                                2,
+                                0.5, 0, 0.5,
                                 0,
                                 blockData
+                        );
+                        player.getWorld().spawnParticle(
+                                Particle.WHITE_ASH,
+                                new Location(loc.getWorld(), x, y+1.5, z),
+                                5,
+                                .5, 2, .5,
+                                0.1
+                        );
+                        player.getWorld().spawnParticle(
+                                Particle.CRIT,
+                                new Location(loc.getWorld(), x, y+.5, z),
+                                1,
+                                .5, .3, .5,
+                                0.1
                         );
                     }
 

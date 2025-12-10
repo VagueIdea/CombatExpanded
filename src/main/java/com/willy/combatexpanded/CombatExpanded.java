@@ -17,10 +17,14 @@ import com.willy.combatexpanded.manager.SlamManager;
 import com.willy.combatexpanded.manager.StaminaManager;
 import com.willy.combatexpanded.placeholder.CombatExpandedPlaceholder;
 
+import java.io.*;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.jar.JarEntry;
+import java.util.jar.JarInputStream;
 
 public class CombatExpanded extends JavaPlugin {
 
@@ -39,7 +43,8 @@ public class CombatExpanded extends JavaPlugin {
         instance = this;
 
         saveDefaultConfig();
-        staminaManager = new StaminaManager(lastMovedTime);
+        copyResourceDirectory(this,"resources");
+        staminaManager = new StaminaManager(lastMovedTime, this);
         dashManager = new DashManager(this);
         slamManager = new SlamManager(this);
         grappleManager = new GrappleManager(this);
@@ -66,6 +71,38 @@ public class CombatExpanded extends JavaPlugin {
         // Register commands
         Objects.requireNonNull(getCommand("ce")).setExecutor(new MainCommand(this));
         Objects.requireNonNull(getCommand("artifice")).setExecutor(new ArtificeCommand(this));
+    }
+
+    public static void copyResourceDirectory(JavaPlugin plugin, String directory) {
+        try {
+            var jarUrl = plugin.getClass()
+                    .getProtectionDomain()
+                    .getCodeSource()
+                    .getLocation();
+
+            try (var jis = new JarInputStream(jarUrl.openStream())) {
+                var target = plugin.getDataPath();
+
+                JarEntry entry;
+                while ((entry = jis.getNextJarEntry()) != null) {
+                    var name = entry.getName();
+
+                    if (!name.startsWith(directory + "/")) continue;
+                    if (entry.isDirectory()) continue;
+
+                    var rel = name.substring((directory + "/").length());
+                    var out = target.resolve(rel);
+
+                    Files.createDirectories(out.getParent());
+
+                    try (var os = Files.newOutputStream(out)) {
+                        jis.transferTo(os);
+                    }
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to copy resources", e);
+        }
     }
 
     public void reloadPlugin(CommandSender sender) {

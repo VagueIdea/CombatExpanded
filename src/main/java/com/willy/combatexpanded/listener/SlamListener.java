@@ -35,7 +35,7 @@ public record SlamListener(SlamManager slamManager, DashManager dashManager, Sta
     public void onPlayerMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
-        if (!plugin.hasArtifice(player) || plugin.isPluginEnabled() || player.isFlying() || player.getVehicle() != null) return;
+        if (!plugin.hasArtifice(player) || plugin.isPluginEnabled() || player.isFlying() || player.isClimbing() || player.getVehicle() != null) return;
 
         if (player.isOnGround()) {
             if (slamManager.isSlamming(uuid)) {
@@ -62,7 +62,7 @@ public record SlamListener(SlamManager slamManager, DashManager dashManager, Sta
         Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
 
-        if (!plugin.hasArtifice(player) || plugin.isPluginEnabled() || player.isFlying() || player.getVehicle() != null) return;
+        if (!plugin.hasArtifice(player) || plugin.isPluginEnabled() || player.isFlying() || player.isClimbing() || player.getVehicle() != null) return;
 
         // Sneak released
         if (!event.isSneaking()) {

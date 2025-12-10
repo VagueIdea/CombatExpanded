@@ -15,7 +15,7 @@ public record StaminaListener(Map<UUID, Long> lastMovedTime, CombatExpanded plug
     public void onPlayerMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
-        if (!plugin.hasArtifice(player) || plugin.isPluginEnabled() || player.isFlying() || player.getVehicle() != null)
+        if (plugin.isPluginEnabled())
             return;
 
         double distanceSquared = event.getFrom().distanceSquared(event.getTo());

@@ -23,9 +23,11 @@ public class StaminaManager {
 
     private final Map<UUID, Double> staminaMap = new HashMap<>();
     private final Map<UUID, Long> lastMovedTime;
+    private final CombatExpanded plugin;
 
-    public StaminaManager(Map<UUID, Long> lastMovedTime) {
+    public StaminaManager(Map<UUID, Long> lastMovedTime, CombatExpanded plugin) {
         this.lastMovedTime = lastMovedTime;
+        this.plugin = plugin;
         reloadConfigValues();
         startRegenTask();
     }
@@ -92,8 +94,8 @@ public class StaminaManager {
 
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     UUID uuid = player.getUniqueId();
+                    if (plugin.isPluginEnabled()) continue;
                     double currentStamina = staminaMap.getOrDefault(uuid, maxStamina);
-
                     if (currentStamina >= maxStamina) continue;
 
                     long now = System.currentTimeMillis();

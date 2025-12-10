@@ -221,7 +221,7 @@ public class GrappleManager {
         List<BlockDisplay> tetherSegments = activeTethers.computeIfAbsent(player.getUniqueId(), k -> new ArrayList<>());
         while (tetherSegments.isEmpty()) {
             BlockDisplay display = (BlockDisplay) world.spawnEntity(start.toLocation(world), EntityType.BLOCK_DISPLAY);
-            display.setBlock(Material.IRON_CHAIN.createBlockData());
+            display.setBlock(Material.CHAIN.createBlockData());
             tetherSegments.add(display);
         }
         while (tetherSegments.size() > 1) {

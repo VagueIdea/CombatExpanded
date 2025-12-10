@@ -18,7 +18,7 @@ public record GrappleListener(GrappleManager grappleManager, CombatExpanded plug
     public void onPlayerSwapHands(PlayerSwapHandItemsEvent event) {
         Player player = event.getPlayer();
 
-        if (!plugin.hasArtifice(player) || plugin.isPluginEnabled() || player.isFlying() || player.getVehicle() != null)
+        if (!plugin.hasArtifice(player) || plugin.isPluginEnabled() || player.isFlying())
             return;
         if (!grappleManager.hasPendingGrapple(player)) return;
 
@@ -52,7 +52,7 @@ public record GrappleListener(GrappleManager grappleManager, CombatExpanded plug
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        if (!plugin.hasArtifice(player) || plugin.isPluginEnabled() || player.isFlying() || player.getVehicle() != null)
+        if (!plugin.hasArtifice(player) || plugin.isPluginEnabled() || player.isFlying())
             return;
         grappleManager.cancelGrapple(player);
     }
@@ -60,7 +60,7 @@ public record GrappleListener(GrappleManager grappleManager, CombatExpanded plug
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent event) {
         Player player = event.getPlayer();
-        if (!plugin.hasArtifice(player) || plugin.isPluginEnabled() || player.isFlying() || player.getVehicle() != null)
+        if (!plugin.hasArtifice(player) || plugin.isPluginEnabled() || player.isFlying())
             return;
         grappleManager.cancelGrapple(player);
     }

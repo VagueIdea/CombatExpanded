@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/CombatExpanded.iml" filepath="$PROJECT_DIR$/CombatExpanded.iml" />
+      <module fileurl="file://$PROJECT_DIR$/combatexpanded.iml" filepath="$PROJECT_DIR$/combatexpanded.iml" />
     </modules>
   </component>
 </project>

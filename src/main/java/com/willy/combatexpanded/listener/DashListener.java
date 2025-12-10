@@ -16,7 +16,7 @@ public record DashListener(DashManager dashManager, StaminaManager staminaManage
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
-        if (!plugin.hasArtifice(player) || plugin.isPluginEnabled() || player.isFlying() || player.getVehicle() != null)
+        if (!plugin.hasArtifice(player) || plugin.isPluginEnabled() || player.isFlying() || player.isClimbing() || player.getVehicle() != null)
             return;
 
         Vector from = event.getFrom().toVector();
@@ -30,7 +30,7 @@ public record DashListener(DashManager dashManager, StaminaManager staminaManage
     @EventHandler
     public void onPlayerToggleSneak(PlayerToggleSneakEvent event) {
         Player player = event.getPlayer();
-        if (!plugin.hasArtifice(player) || plugin.isPluginEnabled() || player.isFlying() || player.getVehicle() != null)
+        if (!plugin.hasArtifice(player) || plugin.isPluginEnabled() || player.isFlying() || player.isClimbing() || player.getVehicle() != null)
             return;
 
         if (!event.isSneaking()) return;
