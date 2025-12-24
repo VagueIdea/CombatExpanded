@@ -43,6 +43,7 @@ public class CombatExpanded extends JavaPlugin {
         instance = this;
 
         saveDefaultConfig();
+        reloadConfig();
         copyResourceDirectory(this,"resources");
         staminaManager = new StaminaManager(lastMovedTime, this);
         dashManager = new DashManager(this);
@@ -66,6 +67,7 @@ public class CombatExpanded extends JavaPlugin {
             getLogger().info("PlaceholderAPI hook registered!");
         }
 
+        applyConfig();
         getLogger().info("CombatExpanded enabled.");
 
         // Register commands
@@ -107,13 +109,16 @@ public class CombatExpanded extends JavaPlugin {
 
     public void reloadPlugin(CommandSender sender) {
         reloadConfig();
+        applyConfig();
+        sender.sendMessage("§aCombatExpanded config reloaded!");
+    }
 
+    private void applyConfig() {
         pluginEnabled = getConfig().getBoolean("plugin-enabled", true);
         staminaManager.reloadConfigValues();
         dashManager.reloadConfigValues();
         slamManager.reloadConfigValues();
         grappleManager.reloadConfigValues();
-        sender.sendMessage("§aCombatExpanded config reloaded!");
     }
 
     public static CombatExpanded getInstance() { return instance; }

@@ -18,19 +18,13 @@ public class CombatExpandedPlaceholder extends PlaceholderExpansion {
     }
 
     @Override
-    public @NotNull String getIdentifier() {
-        return "combatexpanded"; // %combatexpanded_<identifier>%
-    }
+    public @NotNull String getIdentifier() { return "combatexpanded"; }
 
     @Override
-    public @NotNull String getAuthor() {
-        return "Willy";
-    }
+    public @NotNull String getAuthor() { return "Willy"; }
 
     @Override
-    public @NotNull String getVersion() {
-        return plugin.getPluginMeta().getVersion();
-    }
+    public @NotNull String getVersion() { return plugin.getPluginMeta().getVersion(); }
 
     @Override
     public String onPlaceholderRequest(Player player, @NotNull String identifier) {

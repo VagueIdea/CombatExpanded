@@ -22,12 +22,13 @@ public class GrappleManager {
     // Config values
     private long pendingExpire;
     private long timeout;
-    private double pullSpeed;
-    private double smoothness;
-    private double arrivalDistance;
 
-    private String tagNormal;
-    private String tagReverse;
+    private final double pullSpeed = 1.5;
+    private final double smoothness = 0.25;
+    private final double arrivalDistance = 1.0;
+
+    public String tagNormal = "grapple";
+    public String tagReverse = "reverse_grapple";
 
     // Grapple state
     private final Map<UUID, LivingEntity> grappleTargets = new HashMap<>();
@@ -50,17 +51,9 @@ public class GrappleManager {
     public void reloadConfigValues() {
         pendingExpire = plugin.getConfig().getLong("grapple.pending-expire", 60L);
         timeout = plugin.getConfig().getLong("grapple.timeout", 60L);
-        pullSpeed = plugin.getConfig().getDouble("grapple.pull-speed", 1.5);
-        smoothness = plugin.getConfig().getDouble("grapple.smoothness", 0.25);
-        arrivalDistance = plugin.getConfig().getDouble("grapple.arrival-distance", 1.0);
-
-        tagNormal = plugin.getConfig().getString("grapple.tag-normal", "grapple");
-        tagReverse = plugin.getConfig().getString("grapple.tag-reverse", "reverse_grapple");
     }
 
-    /* =========================
-       Pending grapple target
-       ========================= */
+    // Pending grapple target
     public void setPendingGrappleTarget(Player player, LivingEntity target) {
         if (target == null || !target.isValid()) return;
 
@@ -98,9 +91,7 @@ public class GrappleManager {
         return true;
     }
 
-    /* =========================
-       Main grapple logic
-       ========================= */
+    // Main grapple logic
     public void startGrapple(Player player, LivingEntity target) {
         UUID uuid = player.getUniqueId();
 
@@ -159,9 +150,7 @@ public class GrappleManager {
         return current.clone().multiply(1 - t).add(target.clone().multiply(t));
     }
 
-    /* =========================
-       State checks and cancel
-       ========================= */
+    // State checks and cancel
     public boolean isGrappling(Player player) {
         return grappleTargets.containsKey(player.getUniqueId());
     }
@@ -179,9 +168,7 @@ public class GrappleManager {
         removeTether(player);
     }
 
-    /* =========================
-       Simplified Reverse Grapple Helpers
-       ========================= */
+    //* Simplified Reverse Grapple Helpers
     public void setReverse(Player player, LivingEntity target) {
         target.getScoreboardTags().remove(tagNormal);
         target.getScoreboardTags().add(tagReverse);
@@ -206,9 +193,7 @@ public class GrappleManager {
         return reverseTargets.containsKey(player.getUniqueId());
     }
 
-    /* =========================
-       Grapple tether handling (multi-segment)
-       ========================= */
+    // Grapple tether handling
     private void updateTether(Player player, LivingEntity target) {
         World world = player.getWorld();
         BoundingBox playerBB = player.getBoundingBox();

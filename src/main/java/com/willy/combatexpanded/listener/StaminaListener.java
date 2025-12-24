@@ -19,7 +19,7 @@ public record StaminaListener(Map<UUID, Long> lastMovedTime, CombatExpanded plug
             return;
 
         double distanceSquared = event.getFrom().distanceSquared(event.getTo());
-        double thresholdSquared = 0.01; // about 0.1 blocks
+        double thresholdSquared = 0.01;
 
         if (distanceSquared > thresholdSquared) {
             lastMovedTime.put(uuid, System.currentTimeMillis());

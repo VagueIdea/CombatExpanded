@@ -22,19 +22,15 @@ public class DashManager {
     // Configurable fields
     private double DASH_SPEED;
     private double AIR_DASH_SPEED;
-    private double MIN_MOVEMENT_THRESHOLD;
     private long DASH_COOLDOWN_TICKS;
-    private long DASH_GRACE_TICKS;
-    private long DASH_HIT_WINDOW_TICKS;
     private double DASH_DAMAGE;
-    private double DASH_KNOCKBACK;
-    private double DASH_KNOCKBACK_Y;
+
+    private final double MIN_MOVEMENT_THRESHOLD = 0.15;
 
     // Player state tracking
     private final Map<UUID, Vector> lastDirections = new HashMap<>();
     private final Map<UUID, Boolean> hasDashedThisJump = new HashMap<>();
     private final Map<UUID, Long> lastDashTick = new HashMap<>();
-    private final Map<UUID, Long> dashGraceTick = new HashMap<>();
     private final Map<UUID, Long> dashHitWindow = new HashMap<>();
 
     private SlamListener slamListener;
@@ -47,13 +43,8 @@ public class DashManager {
     public void reloadConfigValues() {
         DASH_SPEED = plugin.getConfig().getDouble("dash.speed", 2.0);
         AIR_DASH_SPEED = plugin.getConfig().getDouble("dash.air-speed", 1.2);
-        MIN_MOVEMENT_THRESHOLD = plugin.getConfig().getDouble("dash.min-threshold", 0.15);
         DASH_COOLDOWN_TICKS = plugin.getConfig().getLong("dash.cooldown", 5);
-        DASH_GRACE_TICKS = plugin.getConfig().getLong("dash.grace-period", 5);
-        DASH_HIT_WINDOW_TICKS = plugin.getConfig().getLong("dash.hit-window", 8);
         DASH_DAMAGE = plugin.getConfig().getDouble("dash.damage", 7.5);
-        DASH_KNOCKBACK = plugin.getConfig().getDouble("dash.knockback", 0.5);
-        DASH_KNOCKBACK_Y = plugin.getConfig().getDouble("dash.knockback-y", 1.0);
     }
 
     public void setSlamListener(SlamListener slamListener) {
@@ -83,7 +74,6 @@ public class DashManager {
         long currentTick = Bukkit.getCurrentTick();
 
         if (lastDashTick.containsKey(uuid) && (currentTick - lastDashTick.get(uuid)) < DASH_COOLDOWN_TICKS) return false;
-        if (dashGraceTick.containsKey(uuid) && currentTick < dashGraceTick.get(uuid)) return false;
         return !Boolean.TRUE.equals(hasDashedThisJump.get(uuid));
     }
 
@@ -110,10 +100,10 @@ public class DashManager {
         player.setVelocity(dashVector);
         triggerDashEffects(player);
 
-        hasDashedThisJump.put(uuid, true);
         long currentTick = Bukkit.getCurrentTick();
+        long DASH_HIT_WINDOW_TICKS = 10;
+        hasDashedThisJump.put(uuid, true);
         lastDashTick.put(uuid, currentTick);
-        dashGraceTick.put(uuid, currentTick + DASH_GRACE_TICKS);
         dashHitWindow.put(uuid, currentTick + DASH_HIT_WINDOW_TICKS);
 
         return true;
@@ -138,6 +128,8 @@ public class DashManager {
             if (dashDir.dot(toTarget) < 0.7) continue;
 
             target.damage(DASH_DAMAGE, player);
+            double DASH_KNOCKBACK = 0.5;
+            double DASH_KNOCKBACK_Y = 1.0;
             Vector knockback = loc.getDirection().normalize().multiply(-DASH_KNOCKBACK).setY(DASH_KNOCKBACK_Y);
             player.setVelocity(knockback);
 
@@ -174,7 +166,6 @@ public class DashManager {
         lastDirections.remove(uuid);
         hasDashedThisJump.remove(uuid);
         lastDashTick.remove(uuid);
-        dashGraceTick.remove(uuid);
         dashHitWindow.remove(uuid);
     }
 

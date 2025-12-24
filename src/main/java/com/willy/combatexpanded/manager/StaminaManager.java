@@ -13,10 +13,10 @@ public class StaminaManager {
 
     // Configurable fields
     private double maxStamina;
-    private double normalRegenAmount;
-    private double stillRegenAmount;
     private double dashCost;
     private double slamCost;
+    private double normalRegenAmount;
+    private double stillRegenAmount;
 
     private static final long REGEN_INTERVAL_TICKS = 5L;
     private static final long STILL_THRESHOLD_MS = 500;
@@ -36,15 +36,13 @@ public class StaminaManager {
     public void reloadConfigValues() {
         CombatExpanded plugin = CombatExpanded.getInstance();
         maxStamina = plugin.getConfig().getDouble("stamina.max-stamina", 4);
-        normalRegenAmount = plugin.getConfig().getDouble("stamina.normal-regen", 0.125);
-        stillRegenAmount = plugin.getConfig().getDouble("stamina.still-regen", 0.25);
+        normalRegenAmount = plugin.getConfig().getDouble("stamina.normal-regen", 0.33) / 4;
+        stillRegenAmount = plugin.getConfig().getDouble("stamina.still-regen", 1.0) / 4 ;
         dashCost = plugin.getConfig().getDouble("stamina.dash-cost", 1);
         slamCost = plugin.getConfig().getDouble("stamina.slam-cost", 1);
     }
 
-    // =============================
-    // ==== Public Query Methods ===
-    // =============================
+    // Public Query Methods
     public double getMaxStamina() {
         return maxStamina;
     }
@@ -60,10 +58,7 @@ public class StaminaManager {
     public boolean hasEnoughForDash(Player player) { return hasEnoughStamina(player, dashCost); }
     public boolean hasEnoughForSlam(Player player) { return hasEnoughStamina(player, slamCost); }
 
-    // ============================
-    // ==== Use/Consume Methods ===
-    // ============================
-
+    // Use/Consume Methods
     public void useDashStamina(Player player) {
         useStamina(player, dashCost);
     }
@@ -83,10 +78,7 @@ public class StaminaManager {
         staminaMap.put(uuid, newStamina);
     }
 
-    // ============================
-    // ====== Regen Handling ======
-    // ============================
-
+    // Regen Handling
     private void startRegenTask() {
         new BukkitRunnable() {
             @Override

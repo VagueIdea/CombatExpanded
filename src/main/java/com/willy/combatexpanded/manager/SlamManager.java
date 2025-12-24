@@ -205,7 +205,7 @@ public class SlamManager {
                 }
             }.runTaskTimer(plugin, 0L, 1L);
 
-            // --- Grapple & knockback logic ---
+            // Grapple & knockback logic
             GrappleManager gm = plugin.getGrappleManager();
             LivingEntity pending = gm.getPendingGrappleTarget(player);
 
@@ -220,7 +220,7 @@ public class SlamManager {
                     target.damage(damage, player);
 
                     boolean isIntendedTarget = (pending != null && pending.isValid() && pending.equals(target));
-                    boolean hasNormalTag = target.getScoreboardTags().contains(plugin.getConfig().getString("grapple.tag-normal", "grapple"));
+                    boolean hasNormalTag = target.getScoreboardTags().contains("grapple");
 
                     if (isIntendedTarget || hasNormalTag) {
                         // Apply reverse grapple
